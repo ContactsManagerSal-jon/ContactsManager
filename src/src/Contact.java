@@ -5,12 +5,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contacts {
+public class Contact {
     public String name;
     public String number;
+    List<String> contactsList = new ArrayList<>();
     Path contactsPath = Paths.get("/Users/Jonathan/IdeaProjects/ContactsManager/src", "contact.txt");
 
-    public Contacts(String name, String number) {
+    public Contact(String name, String number) {
         this.name = name;
         this.number = number;
     }
@@ -33,19 +34,23 @@ public class Contacts {
 
 
     //
-   public List<String> loadContacts() {
-       List<String> currentList = new ArrayList<>();
+   public void loadContacts() {
      try {
-           currentList = Files.readAllLines(contactsPath);
+           contactsList = Files.readAllLines(contactsPath);
        } catch (IOException stupid) {
            System.out.println("Catching This Nonsense");
        }
-       for (String l : currentList) {
+       for (String l : contactsList) {
            System.out.println(l);
 
+           }
        }
-
-       return currentList;
+    public void addContact(){
+        try{
+            Files.write(contactsPath,contactsList);
+        }catch(IOException xd){
+            System.out.println("It requires this useless crap");
+        }
    }
 
 

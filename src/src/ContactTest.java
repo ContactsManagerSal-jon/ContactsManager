@@ -1,15 +1,12 @@
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ContactsTest {
+public class ContactTest {
     public void createContact(){
 
     }
@@ -30,21 +27,15 @@ public class ContactsTest {
     //public static List<Contacts> loadContacts(List<Contact>)
 
     public static void main(String[] args) {
-        Contacts chucky =  new Contacts("name1","1235");
-        for (String loadContact : chucky.loadContacts()) {
-            System.out.println(loadContact);
-        }
+        Contact chucky =  new Contact("name1","1235");
+        chucky.loadContacts();
 
+        List<Contact> contacts = new ArrayList<>();
 
-        List<Contacts> contacts = new ArrayList<>();
         Path contactsPath = Paths.get("/Users/Jonathan/IdeaProjects/ContactsManager/src", "contact.txt");
 
         List<String> contactsList = Arrays.asList("Jon doe", "Jane doe");
-        try{
-            Files.write(contactsPath,contactsList);
-        }catch(IOException xd){
-            System.out.println("It requires this useless crap");
-        }
+
 //
 //        List<String> currentList = new ArrayList<>();
 //        try{
