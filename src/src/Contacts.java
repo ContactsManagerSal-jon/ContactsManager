@@ -11,8 +11,8 @@ import java.util.*;
 public class Contacts {
     public String name;
     public String number;
-    Path contactsPath = Paths.get("/Users/Jonathan/IdeaProjects/ContactsManager/src", "contact.txt");
-
+    Path contactsPath = Paths.get("src", "contact.txt");
+    public List<Contacts> contactsList = new ArrayList<Contacts>();
     Scanner scanner = new Scanner(System.in);
 
     public Contacts(String name, String number) {
@@ -56,14 +56,34 @@ public class Contacts {
 
         return currentList;
     }
-public List<Contacts> readWriteContactsObjects(List<String> contacts){
 
-        for(String contact : contacts){
+
+public  List<Contacts> readWriteContactsObjects(){
+    List<String> currentList = new ArrayList<>();
+
+    try {
+        currentList = Files.readAllLines(contactsPath);
+    } catch (IOException stupid) {
+        System.out.println("Catching This Nonsense");
+    }
+    System.out.println("Name | Phone number\n-------------------");
+
+    for (String l : currentList) {
+        System.out.println(l);
+
+    }
+
+        for(String contact : currentList){
             List<String> each = List.of(contact.split(" "));
-            this.name = each.get(0);
-            this.number = each.get(1);
+
+            contactsList.add(new Contacts(each.get(0), each.get(1) ));
+
         }
+
+    return contactsList;
 }
+
+
 
 
     //-------------add contacts

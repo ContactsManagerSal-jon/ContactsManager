@@ -18,6 +18,8 @@ public class ContactsTest {
         Scanner scanner = new Scanner(System.in);
         Contacts chucky = new Contacts();
         chucky.mainMenu();
+      System.out.println(chucky.readWriteContactsObjects(showContacts()));
+
 
 
 
