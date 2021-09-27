@@ -17,50 +17,51 @@ public class ContactsTest {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         Contacts chucky = new Contacts();
+        chucky.mainMenu();
 
 
 
-        boolean userContinue = true;
-        do{
-            System.out.println("1. View contacts.\n" +
-                    "2. Add a new contact.\n" +
-                    "3. Search a contact by name.\n" +
-                    "4. Delete an existing contact.\n" +
-                    "5. Exit.\n" +
-                    "Enter an option (1, 2, 3, 4 or 5):");
-
-            int input = scanner.nextInt();
-
-
-
-//            int userSelection = contactsMenu();
-            switch(input) {
-                case 1:
-                    chucky.showContacts();
-                    break;
-                case 2:
-                    chucky.addContact();
-                    break;
-                case 3:
-                    chucky.editContact();
-                    break;
-                case 4:
-                    chucky.deleteContact();
-                    break;
-                case 5:
-                    System.err.println("Exiting program. Have a great day!");
-                    userContinue = false;
-                    break;
-                default:
-                    System.out.println("Try selecting a different number.");
-            }
-            if(userContinue){
-                System.out.println();
-                //  userContinue = yesNo("Would you like to continue? (Y/N)");
-
-
-            }
-        }   while(userContinue);
+//        boolean userContinue = true;
+//        do{
+//            System.out.println("1. View contacts.\n" +
+//                    "2. Add a new contact.\n" +
+//                    "3. Search a contact by name.\n" +
+//                    "4. Delete an existing contact.\n" +
+//                    "5. Exit.\n" +
+//                    "Enter an option (1, 2, 3, 4 or 5):");
+//
+//            int input = scanner.nextInt();
+//
+//
+//
+////            int userSelection = contactsMenu();
+//            switch(input) {
+//                case 1:
+//                    chucky.showContacts();
+//                    break;
+//                case 2:
+//                    chucky.addContact();
+//                    break;
+//                case 3:
+//                    chucky.editContact();
+//                    break;
+//                case 4:
+//                    chucky.deleteContact();
+//                    break;
+//                case 5:
+//                    System.err.println("Exiting program. Have a great day!");
+//                    userContinue = false;
+//                    break;
+//                default:
+//                    System.out.println("Try selecting a different number.");
+//            }
+//            if(userContinue){
+//                System.out.println();
+//                //  userContinue = yesNo("Would you like to continue? (Y/N)");
+//
+//
+//            }
+//        }   while(userContinue);
 
 
 //        //      //-----load all contats tetst

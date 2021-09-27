@@ -1,20 +1,17 @@
 
-import org.w3c.dom.ls.LSOutput;
+
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Contacts {
     public String name;
     public String number;
-    Path contactsPath = Paths.get("/Users/salvadorsalazar/IdeaProjects/JAVA PRGRAMSEXAMPLES/src/CONTACTS", "contacts.txt");
+    Path contactsPath = Paths.get("/Users/Jonathan/IdeaProjects/ContactsManager/src", "contact.txt");
 
     Scanner scanner = new Scanner(System.in);
 
@@ -56,9 +53,17 @@ public class Contacts {
             System.out.println(l);
 
         }
+
         return currentList;
     }
+public List<Contacts> readWriteContactsObjects(List<String> contacts){
 
+        for(String contact : contacts){
+            List<String> each = List.of(contact.split(" "));
+            this.name = each.get(0);
+            this.number = each.get(1);
+        }
+}
 
 
     //-------------add contacts
@@ -73,26 +78,16 @@ public class Contacts {
 
 
     //-----------Edit/search contacts
-    public void editContact() throws IOException{
-        List <String> currentContacts = Files.readAllLines(contactsPath);
-        List<String> newList = new ArrayList<>();
+    public void searchContact() throws IOException{
+        List<String> currentContacts = Files.readAllLines(contactsPath);
         showContacts();
         System.out.println("Enter Contact to search: ");
         String contact = scanner.nextLine();
         for(String contactInfo:currentContacts){
             if(contactInfo.contains(contact)){
-                System.out.println("Update Name and Number");
-                String name = scanner.nextLine();
-                newList.add(name );
-                System.out.println("You Have Edited : " + name+"'s Contact Info.");
-                // continue;
-
-            }else{
-                newList.add(contactInfo);
+                System.out.println(contactInfo);
             }
         }
-        Files.write(contactsPath,newList);
-
     }
 
 
@@ -119,5 +114,49 @@ public class Contacts {
         Files.write(contactsPath,newList);
     }
 
+public void mainMenu() throws IOException {
+    boolean userContinue = true;
+    do{
+        System.out.println("1. View contacts.\n" +
+                "2. Add a new contact.\n" +
+                "3. Search a contact by name.\n" +
+                "4. Delete an existing contact.\n" +
+                "5. Exit.\n" +
+                "Enter an option (1, 2, 3, 4 or 5):");
 
+        int input = scanner.nextInt();
+        String ghostString = scanner.nextLine();
+
+
+
+
+//            int userSelection = contactsMenu();
+        switch(input) {
+            case 1:
+                this.showContacts();
+                break;
+            case 2:
+                this.addContact();
+                break;
+            case 3:
+                this.searchContact();
+                break;
+            case 4:
+                this.deleteContact();
+                break;
+            case 5:
+                System.err.println("Exiting program. Have a great day!");
+                userContinue = false;
+                break;
+            default:
+                System.out.println("Try selecting a different number.");
+        }
+        if(userContinue){
+            System.out.println();
+            //  userContinue = yesNo("Would you like to continue? (Y/N)");
+
+
+        }
+    }   while(userContinue);
+}
 }
