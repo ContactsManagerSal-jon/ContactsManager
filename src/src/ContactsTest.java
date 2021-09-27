@@ -15,10 +15,10 @@ import java.util.Scanner;
 public class ContactsTest {
 
     public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
         Contacts chucky = new Contacts();
+        chucky.readTextToContactsList();
         chucky.mainMenu();
-      System.out.println(chucky.readWriteContactsObjects(showContacts()));
+
 
 
 

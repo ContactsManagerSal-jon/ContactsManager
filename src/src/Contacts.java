@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class Contacts {
@@ -40,100 +39,77 @@ public class Contacts {
     }
 
     //--------------Show all contacts
-    public List<String> showContacts() {
-        List<String> currentList = new ArrayList<>();
-        try {
-            currentList = Files.readAllLines(contactsPath);
-        } catch (IOException stupid) {
-            System.out.println("Catching This Nonsense");
-        }
+    public void showContacts() {
         System.out.println("Name | Phone number\n-------------------");
-
-        for (String l : currentList) {
-            System.out.println(l);
-
+        for (Contacts contacts : contactsList) {
+            System.out.println(contacts.name + " | "+ contacts.number);
         }
-
-        return currentList;
     }
 
 
-public  List<Contacts> readWriteContactsObjects(){
+public  List<Contacts> readTextToContactsList(){
     List<String> currentList = new ArrayList<>();
-
     try {
         currentList = Files.readAllLines(contactsPath);
     } catch (IOException stupid) {
         System.out.println("Catching This Nonsense");
     }
-    System.out.println("Name | Phone number\n-------------------");
-
-    for (String l : currentList) {
-        System.out.println(l);
-
-    }
-
         for(String contact : currentList){
-            List<String> each = List.of(contact.split(" "));
-
-            contactsList.add(new Contacts(each.get(0), each.get(1) ));
-
+            List<String> each = List.of(contact.split("/"));
+            contactsList.add(new Contacts(each.get(0), each.get(1)));
         }
-
     return contactsList;
 }
 
 
-
-
     //-------------add contacts
     public void addContact() throws IOException {
-        System.out.println("Enter a Name and Number to ADD to Contacts");
+        System.out.println("Enter a Name of the contact");
         String name = scanner.nextLine();
-//          System.out.println("enter number");
-//          String number = scanner.nextLine();
-        Files.write(contactsPath,Arrays.asList(name), StandardOpenOption.APPEND);
+        System.out.println("Please enter the number to reach them at");
+        String number = scanner.nextLine();
+        for(Contacts contact: contactsList){
+            if(contact.name.equals(name)){
+                System.out.println("That contact already exists would you like to enter a diferent one?");
+                String yayNay = scanner.nextLine();
+                if(yayNay.contains("y")){
+                    addContact();
+                    return;
+                }
+                return;
+            }
+        }
+        contactsList.add(new Contacts(name,number));
 
     }
 
 
-    //-----------Edit/search contacts
+    //-----------search contacts
     public void searchContact() throws IOException{
-        List<String> currentContacts = Files.readAllLines(contactsPath);
-        showContacts();
         System.out.println("Enter Contact to search: ");
         String contact = scanner.nextLine();
-        for(String contactInfo:currentContacts){
-            if(contactInfo.contains(contact)){
-                System.out.println(contactInfo);
+        for(Contacts contactInfo: contactsList){
+            if(contactInfo.name.equals(contact)){
+                System.out.println(contactInfo.name + " | " + contactInfo.number);
             }
         }
     }
-
 
 
     //------------delete contact
-    public void deleteContact() throws IOException{
-        List <String> currentContacts = Files.readAllLines(contactsPath);
-        List<String> newList = new ArrayList<>();
-        showContacts();
+    public void deleteContact() throws IOException {
         System.out.println("Type name of contact to DELETE: ");
         String contact = scanner.nextLine();
-        for(String contactInfo:currentContacts){
-            if(contactInfo.contains(contact)){
-//                System.out.println("Entere contact name DELETE");
-//                String name = scanner.nextLine();
-                newList.remove(contactInfo );
-                System.out.println("you have DELETED : " + contact +" from Contacts.");
-                // continue;
-
-            }else{
-                newList.add(contactInfo);
+        for (int i = 0; i < contactsList.size(); i++) {
+            if (contactsList.get(i).name.equals(contact)) {
+                contactsList.remove(i);
+                System.out.println("you have DELETED : " + contact + " from Contacts.");
             }
         }
-        Files.write(contactsPath,newList);
     }
 
+
+//------- Main menu layout
 public void mainMenu() throws IOException {
     boolean userContinue = true;
     do{
@@ -147,10 +123,6 @@ public void mainMenu() throws IOException {
         int input = scanner.nextInt();
         String ghostString = scanner.nextLine();
 
-
-
-
-//            int userSelection = contactsMenu();
         switch(input) {
             case 1:
                 this.showContacts();
@@ -166,6 +138,11 @@ public void mainMenu() throws IOException {
                 break;
             case 5:
                 System.err.println("Exiting program. Have a great day!");
+                List<String> exitList = new ArrayList<>();
+                for(Contacts newList : contactsList){
+                    exitList.add(newList.name + "/" + newList.number);
+                }
+                Files.write(contactsPath,exitList);
                 userContinue = false;
                 break;
             default:
